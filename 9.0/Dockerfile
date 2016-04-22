@@ -39,9 +39,9 @@ RUN chown odoo /etc/odoo/openerp-server.conf
 # Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN mkdir -p /mnt/extra-addons \
         && chown -R odoo /mnt/extra-addons \
-        && mkdir -p /mnt/enterprise-addons \
-        && chown -R odoo /mnt/enterprise-addons
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons", "/mnt/enterprise-addons"]
+        && mkdir -p /mnt/custom-addons \
+        && chown -R odoo /mnt/custom-addons
+VOLUME ["/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
 
 # Expose Odoo services
 EXPOSE 8069 8071
