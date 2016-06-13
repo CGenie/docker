@@ -41,7 +41,11 @@ RUN mkdir -p /mnt/extra-addons \
         && chown -R odoo /mnt/extra-addons \
         && mkdir -p /mnt/custom-addons \
         && chown -R odoo /mnt/custom-addons
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
+VOLUME ["/usr/lib/python2.7/dist-packages/openerp", "/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
+
+# For PostgreSQL dump in container
+RUN apt-get update \
+    && apt-get install -y postgresql-client-common
 
 # Expose Odoo services
 EXPOSE 8069 8071
