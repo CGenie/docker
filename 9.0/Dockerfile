@@ -12,6 +12,7 @@ RUN set -x; \
             python-pyinotify \
             python-renderpm \
             python-support \
+            ipython \
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
@@ -21,10 +22,11 @@ RUN set -x; \
 
 # Install Odoo
 ENV ODOO_VERSION 9.0
-ENV ODOO_RELEASE 20160726
+ENV ODOO_RELEASE 20160613
+ENV RELEASE_CHECKSUM fc59badd1e9617e141b09e423b63621cad75df20
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}c.${ODOO_RELEASE}_all.deb \
-        && echo 'cbd0cbaed27da28eaae1c6460f36d398c8acbf77 odoo.deb' | sha1sum -c - \
+        && echo "${RELEASE_CHECKSUM} odoo.deb" | sha1sum -c - \
         && dpkg --force-depends -i odoo.deb \
         && apt-get update \
         && apt-get -y install -f --no-install-recommends \
@@ -37,8 +39,14 @@ RUN chown odoo /etc/odoo/openerp-server.conf
 
 # Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
 RUN mkdir -p /mnt/extra-addons \
-        && chown -R odoo /mnt/extra-addons
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+        && chown -R odoo /mnt/extra-addons \
+        && mkdir -p /mnt/custom-addons \
+        && chown -R odoo /mnt/custom-addons
+VOLUME ["/usr/lib/python2.7/dist-packages/openerp", "/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
+
+# For PostgreSQL dump in container
+RUN apt-get update \
+    && apt-get install -y postgresql-client-common
 
 # Expose Odoo services
 EXPOSE 8069 8071
