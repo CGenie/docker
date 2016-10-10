@@ -4,9 +4,10 @@ MAINTAINER Odoo S.A. <info@odoo.com>
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         apt-get update \
-        && apt-get install -y --no-install-recommends \
+        && apt-get install -y --no-install-recommends --fix-missing \
             ca-certificates \
             curl \
+            wget \
             node-less \
             node-clean-css \
             python-pyinotify \
@@ -55,8 +56,12 @@ RUN mkdir -p /mnt/extra-addons \
 VOLUME ["/usr/lib/python2.7/dist-packages/openerp", "/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
 
 # For PostgreSQL dump in container
-RUN apt-get update \
-    && apt-get install -y postgresql-client-common
+# Do it for 9.5, Jessie by default has 9.4
+RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' > /etc/apt/sources.list.d/pgdg.list
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN set -x; \
+    apt-get update \
+    && apt-get install -y postgresql-client-9.5
 
 # Expose Odoo services
 EXPOSE 8069 8071
