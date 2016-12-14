@@ -7,6 +7,7 @@ RUN set -x; \
         && apt-get install -y --no-install-recommends --fix-missing \
             ca-certificates \
             curl \
+            git \
             wget \
             node-less \
             node-clean-css \
@@ -33,8 +34,8 @@ RUN set -x; \
 
 # Install Odoo
 ENV ODOO_VERSION 10.0
-ENV ODOO_RELEASE 20161010
-ENV RELEASE_CHECKSUM cea0a08d253b97d289f3b0535b48f5a807b39522
+ENV ODOO_RELEASE 20161212
+ENV RELEASE_CHECKSUM 33c9d4290d83c966163b22cbb9ce5c341bc2a3da
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
         && echo "${RELEASE_CHECKSUM} odoo.deb" | sha1sum -c - \

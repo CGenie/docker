@@ -28,13 +28,28 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
 # Install PIP dependencies
+# EbaySDK requirements
+RUN set -x; \
+        apt-get update \
+        && apt-get install -y --no-install-recommends --fix-missing \
+            libxslt1-dev \
+            python-dev \
+            gcc \
+        && rm -rf /var/lib/apt/lists/*
+
+RUN set -x; \
+    pip install -U pip
+
 RUN set -x; \
     pip install -U raven Wand
+    
+RUN set -x; \
+    pip install -U ebaysdk
 
 # Install Odoo
 ENV ODOO_VERSION 9.0
-ENV ODOO_RELEASE 20161010
-ENV RELEASE_CHECKSUM 50a140a0be32d4c3bfb7c35b3f7c34cc066c459a
+ENV ODOO_RELEASE 20161212
+ENV RELEASE_CHECKSUM 7ae346fbe265e6e88640165a8d6c234a54e3914f
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}c.${ODOO_RELEASE}_all.deb \
         && echo "${RELEASE_CHECKSUM} odoo.deb" | sha1sum -c - \
