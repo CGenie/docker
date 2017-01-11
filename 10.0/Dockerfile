@@ -34,8 +34,8 @@ RUN set -x; \
 
 # Install Odoo
 ENV ODOO_VERSION 10.0
-ENV ODOO_RELEASE 20161212
-ENV RELEASE_CHECKSUM 33c9d4290d83c966163b22cbb9ce5c341bc2a3da
+ENV ODOO_RELEASE 20170104
+ENV RELEASE_CHECKSUM 587b2718d40fadeffce44711e7b77c727d86b34a
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
         && echo "${RELEASE_CHECKSUM} odoo.deb" | sha1sum -c - \
