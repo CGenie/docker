@@ -17,6 +17,7 @@ RUN set -x; \
             ipython \
             python-xlrd \
             python-pip \
+            python-gevent \
             python-ofxparse \
             ghostscript \
             libgraphicsmagick1-dev \
@@ -66,6 +67,9 @@ RUN set -x; \
 
 # Expose Odoo services
 EXPOSE 8069 8071
+
+RUN set -x; \
+    pip install -U psycogreen
 
 # Set the default config file
 ENV OPENERP_SERVER /etc/odoo/openerp-server.conf

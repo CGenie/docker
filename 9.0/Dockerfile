@@ -16,6 +16,7 @@ RUN set -x; \
             ipython \
             python-xlrd \
             python-pip \
+            python-gevent \
             python-ofxparse \
             ghostscript \
             libgraphicsmagick1-dev \
@@ -83,6 +84,10 @@ EXPOSE 8069 8071
 
 # Set the default config file
 ENV OPENERP_SERVER /etc/odoo/openerp-server.conf
+
+# gevent stuff
+RUN set -x; \
+    pip install -U psycogreen
 
 # Set default user when running the container
 USER odoo
