@@ -69,7 +69,7 @@ RUN mkdir -p /mnt/extra-addons \
         && chown -R odoo /mnt/extra-addons \
         && mkdir -p /mnt/custom-addons \
         && chown -R odoo /mnt/custom-addons
-VOLUME ["/usr/lib/python2.7/dist-packages/openerp", "/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
+VOLUME ["/var/lib/odoo", "/mnt/extra-addons", "/mnt/custom-addons"]
 
 # For PostgreSQL dump in container
 # Do it for 9.5, Jessie by default has 9.4
