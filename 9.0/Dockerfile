@@ -21,6 +21,7 @@ RUN set -x; \
             ghostscript \
             libgraphicsmagick1-dev \
             libmagickwand-6.q16-dev \
+            vim \
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
@@ -49,8 +50,8 @@ RUN set -x; \
 
 # Install Odoo
 ENV ODOO_VERSION 9.0
-ENV ODOO_RELEASE 20170213
-ENV RELEASE_CHECKSUM 07bfc697ef9de90261ff6772087bc5951b1bb234
+ENV ODOO_RELEASE 20170330
+ENV RELEASE_CHECKSUM b52146251d9e3576299159cd2f7684322d3716f4
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}c.${ODOO_RELEASE}_all.deb \
         && echo "${RELEASE_CHECKSUM} odoo.deb" | sha1sum -c - \
